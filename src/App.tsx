@@ -12,10 +12,10 @@ import ButtonNavTabs, {
 import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
 import { Paths } from "./common/Constants";
-import { Data } from './mockData';
-import * as R from 'ramda';
+import { Data } from "./mockData";
+import * as R from "ramda";
 import styled from "styled-components";
-import { white, shark } from './common/colors';
+import { white, shark } from "./common/colors";
 import { FlexCol } from "./common/components/flex";
 import { font24, font32 } from "./common/fontSize";
 
@@ -30,7 +30,12 @@ interface RoutesInterface {
   title: string;
   path: string;
   exact: boolean;
-  componentRenderer: (data: UserTasksProps[], addItem: (task: UserTasksProps) => void, deleteItem: (task: UserTasksProps) => void, extras?: any) => JSX.Element;
+  componentRenderer: (
+    data: UserTasksProps[],
+    addItem: (task: UserTasksProps) => void,
+    deleteItem: (task: UserTasksProps) => void,
+    extras?: any
+  ) => JSX.Element;
 }
 
 const Routes: RoutesInterface[] = [
@@ -38,13 +43,27 @@ const Routes: RoutesInterface[] = [
     title: Paths.todo.title,
     path: Paths.todo.path,
     exact: true,
-    componentRenderer: (data, addItem, deleteItem, extras) => <Todo addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => !d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => (
+      <Todo
+        addItem={addItem}
+        deleteItem={deleteItem}
+        extras={extras}
+        data={R.filter((d) => !d.isDone, data)}
+      />
+    ),
   },
   {
     title: Paths.done.title,
     path: Paths.done.path,
     exact: true,
-    componentRenderer: (data, addItem, deleteItem, extras) => <Done addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => (
+      <Done
+        addItem={addItem}
+        deleteItem={deleteItem}
+        extras={extras}
+        data={R.filter((d) => d.isDone, data)}
+      />
+    ),
   },
 ];
 
@@ -63,44 +82,41 @@ const StyledButtonNavTabs = styled(ButtonNavTabs)`
 
 interface State {
   activeTab: string;
-  data: UserTasksProps[]
+  data: UserTasksProps[];
 }
 
 interface Props {}
 
 class App extends Component<Props, State> {
   state = {
-    activeTab: window.localStorage.getItem('activeTab') || Paths.todo.title,
-    data: Data
+    activeTab: window.localStorage.getItem("activeTab") || Paths.todo.title,
+    data: Data,
   };
 
   getExtras = (title: string) => {
-    return (
-      {
-      }
-    )
-  }
+    return {};
+  };
 
   addItem = (item: UserTasksProps) => {
     let newData = R.append(item, this.state.data);
     this.setState({
-      data: newData
+      data: newData,
     });
-  }
+  };
 
   deleteItem = (item: UserTasksProps) => {
-    let newData = R.filter(d => d.key !== item.key, this.state.data);
+    let newData = R.filter((d) => d.key !== item.key, this.state.data);
     this.setState({
-      data: newData
+      data: newData,
     });
-  }
+  };
 
   handleNavTabClick = (title: string) => {
-    window.localStorage.setItem('activeTab', title);
+    window.localStorage.setItem("activeTab", title);
     this.setState({
-      activeTab: title
+      activeTab: title,
     });
-  }
+  };
 
   render() {
     const tabPaths: ButtonNavTabProps[] = Routes.map((route) => ({
@@ -112,7 +128,11 @@ class App extends Component<Props, State> {
       <Router>
         <div className="App">
           <AppContent>
-            <StyledButtonNavTabs onClick={this.handleNavTabClick} activeTab={this.state.activeTab} tabPaths={tabPaths} />
+            <StyledButtonNavTabs
+              onClick={this.handleNavTabClick}
+              activeTab={this.state.activeTab}
+              tabPaths={tabPaths}
+            />
             <Switch>
               <Route exact path="/">
                 {this.state.activeTab === Paths.todo.title ? (
@@ -123,7 +143,12 @@ class App extends Component<Props, State> {
               </Route>
               {Routes.map((route) => (
                 <Route exact={route.exact} path={route.path}>
-                  {route.componentRenderer(this.state.data, this.addItem, this.deleteItem, this.getExtras(route.title))}
+                  {route.componentRenderer(
+                    this.state.data,
+                    this.addItem,
+                    this.deleteItem,
+                    this.getExtras(route.title)
+                  )}
                 </Route>
               ))}
             </Switch>
