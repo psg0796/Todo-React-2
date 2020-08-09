@@ -21,7 +21,11 @@ const ButtonNavTabs: React.SFC<Props> = (props) => (
     {
       props.tabPaths.map(path => 
         <Link to={path.linkTo}>
-          <Button type={R.equals(props.activeTab, path.title) ? "primary" : "default"} title={path.title} onClick={() => props.onClick(path.title)}/>
+          <Button
+            size="large"
+            type={R.equals(props.activeTab, path.title) ? "primary" : "default"}
+            title={path.title} onClick={() => props.onClick(path.title)}
+          />
         </Link>
       )
     }
