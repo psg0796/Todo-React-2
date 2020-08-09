@@ -24,8 +24,8 @@ const columns = [
     dataIndex: 'isDone',
     render: (isDone: boolean) => (
       <FlexRow>
-        {isDone? <Button title="Todo"/> : <Button title="Done"/>}
-        <Button title="Delete" />
+        {isDone? <Button type="primary" title="Todo"/> : <Button type="primary" title="Done"/>}
+        <Button type="default" isDanger={true} title="Delete" />
       </FlexRow>
     )
   },
@@ -34,7 +34,7 @@ const columns = [
 const TaskTable: React.SFC<Props> = (props) => {
   const expandable = {
     expandedRowRender: (record: UserTasksProps) => <p>{record.description}</p>,
-    rowExpandable: (record: UserTasksProps) => R.isEmpty(record.description),
+    rowExpandable: (record: UserTasksProps) => !R.isEmpty(record.description),
   };
 
   return <Table expandable={expandable} columns={columns} dataSource={props.data} />
