@@ -14,9 +14,13 @@ import Done from "./MainApp/done";
 import { Paths } from "./common/Constants";
 import { Data } from './mockData';
 import * as R from 'ramda';
+import styled from "styled-components";
+import { white, shark } from './common/colors';
+import { FlexCol } from "./common/components/flex";
+import { font24, font32 } from "./common/fontSize";
 
 export interface UserTasksProps {
-  id: Number;
+  key: Date;
   title: String;
   description: String;
   isDone: boolean;
@@ -26,7 +30,7 @@ interface RoutesInterface {
   title: string;
   path: string;
   exact: boolean;
-  componentRenderer: (arg0: UserTasksProps[]) => JSX.Element;
+  componentRenderer: (data: UserTasksProps[], addItem: (task: UserTasksProps) => void, deleteItem: (task: UserTasksProps) => void, extras?: any) => JSX.Element;
 }
 
 const Routes: RoutesInterface[] = [
@@ -34,15 +38,28 @@ const Routes: RoutesInterface[] = [
     title: Paths.todo.title,
     path: Paths.todo.path,
     exact: true,
-    componentRenderer: (data) => <Todo data={R.filter(d => !d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => <Todo addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => !d.isDone, data)} />,
   },
   {
     title: Paths.done.title,
     path: Paths.done.path,
     exact: true,
-    componentRenderer: (data) => <Done data={R.filter(d => d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => <Done addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => d.isDone, data)} />,
   },
 ];
+
+const AppContent = styled(FlexCol)`
+  background-color: ${shark};
+  min-height: 100vh;
+  font-size: ${font24};
+  color: ${white};
+`;
+
+const StyledButtonNavTabs = styled(ButtonNavTabs)`
+  width: 30%;
+  justify-content: space-around;
+  font-size: ${font32};
+`;
 
 interface State {
   activeTab: string;
@@ -57,6 +74,34 @@ class App extends Component<Props, State> {
     data: Data
   };
 
+  getExtras = (title: string) => {
+    return (
+      {
+      }
+    )
+  }
+
+  addItem = (item: UserTasksProps) => {
+    let newData = R.append(item, this.state.data);
+    this.setState({
+      data: newData
+    });
+  }
+
+  deleteItem = (item: UserTasksProps) => {
+    let newData = R.filter(d => d.key !== item.key, this.state.data);
+    this.setState({
+      data: newData
+    });
+  }
+
+  handleNavTabClick = (title: string) => {
+    window.localStorage.setItem('activeTab', title);
+    this.setState({
+      activeTab: title
+    });
+  }
+
   render() {
     const tabPaths: ButtonNavTabProps[] = Routes.map((route) => ({
       title: route.title,
@@ -66,8 +111,8 @@ class App extends Component<Props, State> {
     return (
       <Router>
         <div className="App">
-          <header className="App-header">
-            <ButtonNavTabs tabPaths={tabPaths} />
+          <AppContent>
+            <StyledButtonNavTabs onClick={this.handleNavTabClick} activeTab={this.state.activeTab} tabPaths={tabPaths} />
             <Switch>
               <Route exact path="/">
                 {this.state.activeTab === Paths.todo.title ? (
@@ -78,11 +123,11 @@ class App extends Component<Props, State> {
               </Route>
               {Routes.map((route) => (
                 <Route exact={route.exact} path={route.path}>
-                  {route.componentRenderer(this.state.data)}
+                  {route.componentRenderer(this.state.data, this.addItem, this.deleteItem, this.getExtras(route.title))}
                 </Route>
               ))}
             </Switch>
-          </header>
+          </AppContent>
         </div>
       </Router>
     );

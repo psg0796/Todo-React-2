@@ -4,10 +4,13 @@ import { UserTasksProps } from '../App';
 
 interface Props {
   data: UserTasksProps[]
+  addItem: (task: UserTasksProps) => void,
+  deleteItem: (task: UserTasksProps) => void,
+  extras: any
 }
 
 const Done: React.SFC<Props> = (props) => (
-  <TaskTable data={props.data} />
+  <TaskTable data={props.data} addItem={props.addItem} deleteItem={props.deleteItem} />
 )
 
 export default Done;
