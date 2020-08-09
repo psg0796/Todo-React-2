@@ -2,13 +2,13 @@ import { UserTasksProps } from './App';
 
 export const Data: UserTasksProps[] = [
   {
-    id: 123,
+    key: new Date(),
     title: "okoko",
     description: "ooopooo",
     isDone: false
   },
   {
-    id: 124,
+    key: new Date(),
     title: "okoko",
     description: "ooopooo",
     isDone: true

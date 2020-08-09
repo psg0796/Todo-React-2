@@ -20,7 +20,7 @@ import { FlexCol } from "./common/components/flex";
 import { font24, font32 } from "./common/fontSize";
 
 export interface UserTasksProps {
-  id: Number;
+  key: Date;
   title: String;
   description: String;
   isDone: boolean;

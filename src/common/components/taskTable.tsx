@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import * as R from 'ramda';
 import Button from './button';
 import { FlexRow } from './flex';
+import moment from 'moment';
 
 interface Props {
   data: UserTasksProps[]
@@ -17,7 +18,8 @@ const columns = [
   },
   {
     title: 'Created On',
-    dataIndex: 'id',
+    dataIndex: 'key',
+    render: (date: Date) => moment.utc(date).format("MMMM Do YYYY, h:mm a").toString()
   },
   {
     title: 'Actions',
@@ -31,13 +33,14 @@ const columns = [
   },
 ];
 
-const TaskTable: React.SFC<Props> = (props) => {
-  const expandable = {
-    expandedRowRender: (record: UserTasksProps) => <p>{record.description}</p>,
-    rowExpandable: (record: UserTasksProps) => !R.isEmpty(record.description),
-  };
-
-  return <Table expandable={expandable} columns={columns} dataSource={props.data} />
-}
+const TaskTable: React.SFC<Props> = (props) => 
+  <Table
+    expandable={{
+      expandedRowRender: (record: UserTasksProps) => <p>{record.description}</p>,
+      rowExpandable: (record: UserTasksProps) => !R.isEmpty(record.description),
+    }}
+    columns={columns}
+    dataSource={props.data}
+  />
 
 export default TaskTable;
