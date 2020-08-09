@@ -1,16 +1,16 @@
-import { UserTasksProps } from './App';
+import { UserTasksProps } from "./App";
 
 export const Data: UserTasksProps[] = [
   {
     key: new Date(),
     title: "okoko",
     description: "ooopooo",
-    isDone: false
+    isDone: false,
   },
   {
     key: new Date(),
     title: "okoko",
     description: "ooopooo",
-    isDone: true
-  }
+    isDone: true,
+  },
 ];
