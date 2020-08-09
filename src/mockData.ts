@@ -5,6 +5,12 @@ export const Data: UserTasksProps[] = [
     id: 123,
     title: "okoko",
     description: "ooopooo",
-    isDone: false 
+    isDone: false
+  },
+  {
+    id: 124,
+    title: "okoko",
+    description: "ooopooo",
+    isDone: true
   }
 ];

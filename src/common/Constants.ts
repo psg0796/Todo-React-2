@@ -5,6 +5,6 @@ export const Paths: Record<string, Record<string, string>> = {
   },
   done: {
     title: "Done",
-    path: './done'
+    path: '/done'
   }
 }
