@@ -12,6 +12,7 @@ import ButtonNavTabs, {
 import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
 import { Paths } from "./common/Constants";
+import { Data } from './mockData';
 
 export interface UserTasksProps {
   id: Number;
@@ -44,6 +45,7 @@ const Routes: RoutesInterface[] = [
 
 interface State {
   activeTab: string;
+  data: UserTasksProps[]
 }
 
 interface Props {}
@@ -51,6 +53,7 @@ interface Props {}
 class App extends Component<Props, State> {
   state = {
     activeTab: Paths.todo.title,
+    data: Data
   };
 
   render() {
@@ -58,9 +61,6 @@ class App extends Component<Props, State> {
       title: route.title,
       linkTo: route.path,
     }));
-    const data: UserTasksProps[] = [
-      { id: 123, title: "okoko", description: "ooopooo", isDone: false },
-    ];
 
     return (
       <Router>
@@ -79,7 +79,7 @@ class App extends Component<Props, State> {
               </Route>
               {Routes.map((route) => (
                 <Route exact={route.exact} path={route.path}>
-                  {route.componentRenderer(data)}
+                  {route.componentRenderer(this.state.data)}
                 </Route>
               ))}
             </Switch>
