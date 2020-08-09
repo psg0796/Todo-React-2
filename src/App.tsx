@@ -30,7 +30,7 @@ interface RoutesInterface {
   title: string;
   path: string;
   exact: boolean;
-  componentRenderer: (data: UserTasksProps[], addItem: (task: UserTasksProps) => void, extras?: any) => JSX.Element;
+  componentRenderer: (data: UserTasksProps[], addItem: (task: UserTasksProps) => void, deleteItem: (task: UserTasksProps) => void, extras?: any) => JSX.Element;
 }
 
 const Routes: RoutesInterface[] = [
@@ -38,13 +38,13 @@ const Routes: RoutesInterface[] = [
     title: Paths.todo.title,
     path: Paths.todo.path,
     exact: true,
-    componentRenderer: (data, addItem, extras) => <Todo addItem={addItem} extras={extras} data={R.filter(d => !d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => <Todo addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => !d.isDone, data)} />,
   },
   {
     title: Paths.done.title,
     path: Paths.done.path,
     exact: true,
-    componentRenderer: (data) => <Done data={R.filter(d => d.isDone, data)} />,
+    componentRenderer: (data, addItem, deleteItem, extras) => <Done addItem={addItem} deleteItem={deleteItem} extras={extras} data={R.filter(d => d.isDone, data)} />,
   },
 ];
 
@@ -88,7 +88,15 @@ class App extends Component<Props, State> {
     });
   }
 
+  deleteItem = (item: UserTasksProps) => {
+    let newData = R.filter(d => d.key !== item.key, this.state.data);
+    this.setState({
+      data: newData
+    });
+  }
+
   handleNavTabClick = (title: string) => {
+    window.localStorage.setItem('activeTab', title);
     this.setState({
       activeTab: title
     });
@@ -115,7 +123,7 @@ class App extends Component<Props, State> {
               </Route>
               {Routes.map((route) => (
                 <Route exact={route.exact} path={route.path}>
-                  {route.componentRenderer(this.state.data, this.addItem, this.getExtras(route.title))}
+                  {route.componentRenderer(this.state.data, this.addItem, this.deleteItem, this.getExtras(route.title))}
                 </Route>
               ))}
             </Switch>

@@ -11,7 +11,8 @@ moment().format();
 
 interface Props {
   data: UserTasksProps[],
-  addItem: (task: UserTasksProps) => void
+  addItem: (task: UserTasksProps) => void,
+  deleteItem: (task: UserTasksProps) => void,
   extras: any,
 }
 
@@ -33,7 +34,7 @@ const Todo: React.SFC<Props> = (props) => {
         Title : <Input onChange={e => setTitle(e.target.value)} placeholder="Enter the title to be displayed" />
         Description: <TextArea onChange={e => setDescription(e.target.value)} placeholder="Enter any description"/>
       </Modal>
-      <TaskTable data={props.data} />
+      <TaskTable data={props.data} addItem={props.addItem} deleteItem={props.deleteItem} />
     </>
   );
 }
