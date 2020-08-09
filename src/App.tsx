@@ -13,6 +13,7 @@ import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
 import { Paths } from "./common/Constants";
 import { Data } from './mockData';
+import * as R from 'ramda';
 
 export interface UserTasksProps {
   id: Number;
@@ -33,13 +34,13 @@ const Routes: RoutesInterface[] = [
     title: Paths.todo.title,
     path: Paths.todo.path,
     exact: true,
-    componentRenderer: (data) => <Todo data={data} />,
+    componentRenderer: (data) => <Todo data={R.filter(d => !d.isDone, data)} />,
   },
   {
     title: Paths.done.title,
-    path: Paths.done.title,
+    path: Paths.done.path,
     exact: true,
-    componentRenderer: (data) => <Done data={data} />,
+    componentRenderer: (data) => <Done data={R.filter(d => d.isDone, data)} />,
   },
 ];
 
@@ -52,7 +53,7 @@ interface Props {}
 
 class App extends Component<Props, State> {
   state = {
-    activeTab: Paths.todo.title,
+    activeTab: window.localStorage.getItem('activeTab') || Paths.todo.title,
     data: Data
   };
 
@@ -67,8 +68,6 @@ class App extends Component<Props, State> {
         <div className="App">
           <header className="App-header">
             <ButtonNavTabs tabPaths={tabPaths} />
-          </header>
-          <body>
             <Switch>
               <Route exact path="/">
                 {this.state.activeTab === Paths.todo.title ? (
@@ -83,7 +82,7 @@ class App extends Component<Props, State> {
                 </Route>
               ))}
             </Switch>
-          </body>
+          </header>
         </div>
       </Router>
     );
