@@ -16,8 +16,9 @@ import { Data } from "./mockData";
 import * as R from "ramda";
 import styled from "styled-components";
 import { white, shark } from "./common/colors";
-import { FlexCol } from "./common/components/flex";
+import { FlexCol, Flex } from "./common/components/flex";
 import { font24, font32 } from "./common/fontSize";
+import { margin24 } from "./common/margin";
 
 export interface UserTasksProps {
   key: Date;
@@ -67,16 +68,19 @@ const Routes: RoutesInterface[] = [
   },
 ];
 
-const AppContent = styled(FlexCol)`
+const AppContainer = styled(Flex)`
   background-color: ${shark};
   min-height: 100vh;
   font-size: ${font24};
   color: ${white};
 `;
 
+const AppContent = styled(FlexCol)`
+`;
+
 const StyledButtonNavTabs = styled(ButtonNavTabs)`
-  width: 30%;
-  justify-content: space-around;
+  width: 100%;
+  justify-content: space-between;
   font-size: ${font32};
 `;
 
@@ -127,32 +131,34 @@ class App extends Component<Props, State> {
     return (
       <Router>
         <div className="App">
-          <AppContent>
-            <StyledButtonNavTabs
-              onClick={this.handleNavTabClick}
-              activeTab={this.state.activeTab}
-              tabPaths={tabPaths}
-            />
-            <Switch>
-              <Route exact path="/">
-                {this.state.activeTab === Paths.todo.title ? (
-                  <Redirect to={Paths.todo.path} />
-                ) : (
-                  <Redirect to={Paths.done.path} />
-                )}
-              </Route>
-              {Routes.map((route) => (
-                <Route exact={route.exact} path={route.path}>
-                  {route.componentRenderer(
-                    this.state.data,
-                    this.addItem,
-                    this.deleteItem,
-                    this.getExtras(route.title)
+          <AppContainer>
+            <AppContent>
+              <StyledButtonNavTabs
+                onClick={this.handleNavTabClick}
+                activeTab={this.state.activeTab}
+                tabPaths={tabPaths}
+              />
+              <Switch>
+                <Route exact path="/">
+                  {this.state.activeTab === Paths.todo.title ? (
+                    <Redirect to={Paths.todo.path} />
+                  ) : (
+                    <Redirect to={Paths.done.path} />
                   )}
                 </Route>
-              ))}
-            </Switch>
-          </AppContent>
+                {Routes.map((route) => (
+                  <Route exact={route.exact} path={route.path}>
+                    {route.componentRenderer(
+                      this.state.data,
+                      this.addItem,
+                      this.deleteItem,
+                      this.getExtras(route.title)
+                    )}
+                  </Route>
+                ))}
+              </Switch>
+            </AppContent>
+          </AppContainer>
         </div>
       </Router>
     );

@@ -19,6 +19,7 @@ interface Props {
 }
 
 const StyledButton = styled(Button)`
+  align-self: flex-start;
   margin-top: ${margin24};
 `;
 
@@ -60,7 +61,7 @@ const Todo: React.SFC<Props> = (props) => {
       >
         <h2>Title : <Input onChange={e => setTitle(e.target.value)} placeholder="Enter the title to be displayed" value={newTitle}/></h2>
         <h3>Description: <TextArea onChange={e => setDescription(e.target.value)} placeholder="Enter any description" value={newDescription}/></h3>
-        <Button title="reset" isDanger={true} type="ghost" onClick={reset} />
+        <Button title="reset" isDanger={true} type="primary" onClick={reset} />
       </Modal>
       <TaskTable data={props.data} addItem={props.addItem} deleteItem={props.deleteItem} />
     </>
