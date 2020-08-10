@@ -15,7 +15,13 @@ export interface ButtonProps {
 }
 
 const Button: React.SFC<ButtonProps> = (props) => (
-  <AntButton size={props.size} type={props.type} onClick={props.onClick} danger={props.isDanger} className={props.className}>
+  <AntButton
+    size={props.size}
+    type={props.type}
+    onClick={props.onClick}
+    danger={props.isDanger}
+    className={props.className}
+  >
     {props.title}
   </AntButton>
 )

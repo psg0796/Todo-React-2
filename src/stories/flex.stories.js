@@ -10,6 +10,10 @@ export default {
 
 const FlexData = R.repeat(<Button title="Item"/>, 10);
 
-export const Column = () => <div style={{height: '100vh'}}><FlexCol>{FlexData}</FlexCol></div>;
+export const Column = () => <div style={{height: '100vh'}}>
+    <FlexCol>
+      {FlexData}
+    </FlexCol>
+  </div>;
 
 export const Row = () => <FlexRow>{FlexData}</FlexRow>;

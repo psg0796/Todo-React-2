@@ -17,19 +17,19 @@ export const Data: UserTasksProps[] = [
 
 export const tabPaths: Record<string, string>[] = [
   {
-    title: 'first',
-    linkTo: '/first',
+    title: "first",
+    linkTo: "/first",
   },
   {
-    title: 'second',
-    linkTo: '/second',
+    title: "second",
+    linkTo: "/second",
   },
   {
-    title: 'third',
-    linkTo: '/third',
+    title: "third",
+    linkTo: "/third",
   },
   {
-    title: 'fourth',
-    linkTo: '/fourth',
-  }
-]
+    title: "fourth",
+    linkTo: "/fourth",
+  },
+];

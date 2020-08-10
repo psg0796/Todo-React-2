@@ -67,15 +67,33 @@ const Todo: React.SFC<Props> = (props) => {
 
   return (
     <>
-      <StyledButton size="large" type="link" title="+ click here to add a task" onClick={() => setAddModalVisible(true)}/>
+      <StyledButton
+        size="large"
+        type="link"
+        title="+ click here to add a task"
+        onClick={() => setAddModalVisible(true)}
+      />
       <Modal
         title="Add item to do"
         visible={addModalVisible}
         onOk={onModalOk}
         onCancel={onModalCancel}
       >
-        <h2>Title : <Input onChange={e => setTitle(e.target.value)} placeholder="Enter the title to be displayed" value={newTitle}/></h2>
-        <h3>Description: <TextArea disabled={R.isEmpty(newTitle)} onChange={e => setDescription(e.target.value)} placeholder="Enter any description" value={newDescription}/></h3>
+        <h2>Title : 
+          <Input
+            onChange={e => setTitle(e.target.value)}
+            placeholder="Enter the title to be displayed"
+            value={newTitle}
+          />
+        </h2>
+        <h3>Description: 
+          <TextArea
+            disabled={R.isEmpty(newTitle)}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Enter any description"
+            value={newDescription}
+          />
+        </h3>
         <Button title="reset" isDanger={true} type="primary" onClick={reset} />
       </Modal>
       <TaskTable data={props.data} addItem={props.addItem} deleteItem={props.deleteItem} />

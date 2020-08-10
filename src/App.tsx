@@ -75,6 +75,7 @@ const AppContainer = styled(Flex)`
 `;
 
 const AppContent = styled(FlexCol)`
+  width: fit-content;
 `;
 
 const StyledButtonNavTabs = styled(ButtonNavTabs)`
