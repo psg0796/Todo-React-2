@@ -19,6 +19,7 @@ const StyledFlexRow = styled(FlexRow)`
   > button {
     margin: ${margin8};
   }
+  width: fit-content;
 `;
 
 const TableContainer = styled.div`

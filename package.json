@@ -31,7 +31,9 @@
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint \"src/**/*.{js,ts,tsx}\"",
     "lint-fix": "node_modules/.bin/eslint \"src/**/*.{js,ts,tsx}\" --fix",
-    "prettify": "prettier --write **/*.{js,ts,tsx}"
+    "prettify": "prettier --write **/*.{js,ts,tsx}",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,6 +51,11 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^5.3.19",
     "eslint-config-prettier": "^6.11.0",
     "prettier": "2.0.5"
   }

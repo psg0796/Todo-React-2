@@ -24,7 +24,8 @@ const ButtonNavTabs: React.SFC<Props> = (props) => (
           <Button
             size="large"
             type={R.equals(props.activeTab, path.title) ? "primary" : "default"}
-            title={path.title} onClick={() => props.onClick(path.title)}
+            title={path.title}
+            onClick={() => props.onClick(path.title)}
           />
         </Link>
       )

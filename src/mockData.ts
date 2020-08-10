@@ -14,3 +14,22 @@ export const Data: UserTasksProps[] = [
     isDone: true,
   },
 ];
+
+export const tabPaths: Record<string, string>[] = [
+  {
+    title: 'first',
+    linkTo: '/first',
+  },
+  {
+    title: 'second',
+    linkTo: '/second',
+  },
+  {
+    title: 'third',
+    linkTo: '/third',
+  },
+  {
+    title: 'fourth',
+    linkTo: '/fourth',
+  }
+]
