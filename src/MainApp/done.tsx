@@ -6,7 +6,6 @@ interface Props {
   data: UserTasksProps[]
   addItem: (task: UserTasksProps) => void,
   deleteItem: (task: UserTasksProps) => void,
-  extras: any
 }
 
 const Done: React.SFC<Props> = (props) => (

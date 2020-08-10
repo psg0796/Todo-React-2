@@ -34,7 +34,6 @@ interface RoutesInterface {
     data: UserTasksProps[],
     addItem: (task: UserTasksProps) => void,
     deleteItem: (task: UserTasksProps) => void,
-    extras?: any
   ) => JSX.Element;
 }
 
@@ -43,11 +42,10 @@ const routes: RoutesInterface[] = [
     title: paths.todo.title,
     path: paths.todo.path,
     exact: true,
-    componentRenderer: (data, addItem, deleteItem, extras) => (
+    componentRenderer: (data, addItem, deleteItem) => (
       <Todo
         addItem={addItem}
         deleteItem={deleteItem}
-        extras={extras}
         data={filter((d) => !d.isDone, data)}
       />
     ),
@@ -56,11 +54,10 @@ const routes: RoutesInterface[] = [
     title: paths.done.title,
     path: paths.done.path,
     exact: true,
-    componentRenderer: (data, addItem, deleteItem, extras) => (
+    componentRenderer: (data, addItem, deleteItem) => (
       <Done
         addItem={addItem}
         deleteItem={deleteItem}
-        extras={extras}
         data={filter((d) => d.isDone, data)}
       />
     ),
@@ -97,19 +94,15 @@ class App extends Component<Props, State> {
     data: data,
   };
 
-  getExtras = (title: string) => {
-    return {};
-  };
-
   addItem = (item: UserTasksProps) => {
-    let newData = append(item, this.state.data);
+    const newData = append(item, this.state.data);
     this.setState({
       data: newData,
     });
   };
 
   deleteItem = (item: UserTasksProps) => {
-    let newData = filter((d) => d.key !== item.key, this.state.data);
+    const newData = filter((d) => d.key !== item.key, this.state.data);
     this.setState({
       data: newData,
     });
@@ -151,8 +144,7 @@ class App extends Component<Props, State> {
                     {route.componentRenderer(
                       this.state.data,
                       this.addItem,
-                      this.deleteItem,
-                      this.getExtras(route.title)
+                      this.deleteItem
                     )}
                   </Route>
                 ), routes)}

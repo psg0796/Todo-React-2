@@ -16,7 +16,6 @@ interface Props {
   data: UserTasksProps[],
   addItem: (task: UserTasksProps) => void,
   deleteItem: (task: UserTasksProps) => void,
-  extras: any,
 }
 
 const StyledButton = styled(Button)`
