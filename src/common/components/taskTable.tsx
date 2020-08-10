@@ -2,7 +2,7 @@ import React from 'react';
 import { UserTasksProps } from '../../App';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
-import * as R from 'ramda';
+import { clone, not, isEmpty } from 'ramda';
 import Button from './button';
 import { FlexRow } from './flex';
 import moment from 'moment';
@@ -27,9 +27,9 @@ const TableContainer = styled.div`
 `;
 
 const handleItemToggle = (item: UserTasksProps, deleteItem: (task: UserTasksProps) => void, addItem: (task: UserTasksProps) => void) => {
-  let newItem = R.clone(item);
+  let newItem = clone(item);
   newItem.key = new Date();
-  newItem.isDone = R.not(newItem.isDone);
+  newItem.isDone = not(newItem.isDone);
   addItem(newItem);
 
   setTimeout(() => deleteItem(item), 200);
@@ -64,7 +64,7 @@ const TaskTable: React.SFC<Props> = (props) => {
       <Table
         expandable={{
           expandedRowRender: (record: UserTasksProps) => <p>{record.description}</p>,
-          rowExpandable: (record: UserTasksProps) => !R.isEmpty(record.description),
+          rowExpandable: (record: UserTasksProps) => not(isEmpty(record.description)),
         }}
         columns={columns}
         dataSource={props.data}

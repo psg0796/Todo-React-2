@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskTable from '../common/components/taskTable';
 import { Data } from '../mockData';
-import * as R from 'ramda';
+import { repeat } from 'ramda';
 
 export default {
   component: TaskTable,
@@ -10,4 +10,4 @@ export default {
 
 export const Table = () => <TaskTable data={Data} />;
 
-export const LargeTable = () => <TaskTable data={R.repeat(Data, 100)} />;
+export const LargeTable = () => <TaskTable data={repeat(Data, 100)} />;

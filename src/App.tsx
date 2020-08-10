@@ -13,7 +13,7 @@ import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
 import { Paths } from "./common/Constants";
 import { Data } from "./mockData";
-import * as R from "ramda";
+import { filter, append } from "ramda";
 import styled from "styled-components";
 import { white, shark } from "./common/colors";
 import { FlexCol, Flex } from "./common/components/flex";
@@ -48,7 +48,7 @@ const Routes: RoutesInterface[] = [
         addItem={addItem}
         deleteItem={deleteItem}
         extras={extras}
-        data={R.filter((d) => !d.isDone, data)}
+        data={filter((d) => !d.isDone, data)}
       />
     ),
   },
@@ -61,7 +61,7 @@ const Routes: RoutesInterface[] = [
         addItem={addItem}
         deleteItem={deleteItem}
         extras={extras}
-        data={R.filter((d) => d.isDone, data)}
+        data={filter((d) => d.isDone, data)}
       />
     ),
   },
@@ -102,14 +102,14 @@ class App extends Component<Props, State> {
   };
 
   addItem = (item: UserTasksProps) => {
-    let newData = R.append(item, this.state.data);
+    let newData = append(item, this.state.data);
     this.setState({
       data: newData,
     });
   };
 
   deleteItem = (item: UserTasksProps) => {
-    let newData = R.filter((d) => d.key !== item.key, this.state.data);
+    let newData = filter((d) => d.key !== item.key, this.state.data);
     this.setState({
       data: newData,
     });

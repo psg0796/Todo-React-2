@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './button';
 import { Link } from 'react-router-dom';
 import { FlexRow } from './flex';
-import * as R from 'ramda';
+import { equals } from 'ramda';
 
 export interface ButtonNavTabProps {
   title: string,
@@ -23,7 +23,7 @@ const ButtonNavTabs: React.SFC<Props> = (props) => (
         <Link to={path.linkTo}>
           <Button
             size="large"
-            type={R.equals(props.activeTab, path.title) ? "primary" : "default"}
+            type={equals(props.activeTab, path.title) ? "primary" : "default"}
             title={path.title}
             onClick={() => props.onClick(path.title)}
           />

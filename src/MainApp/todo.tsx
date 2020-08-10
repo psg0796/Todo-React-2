@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Input, notification } from 'antd';
 import styled from 'styled-components';
 import { margin24 } from '../common/margin';
-import * as R from 'ramda';
+import { isEmpty } from 'ramda';
 
 const { TextArea } = Input;
 moment().format();
@@ -43,7 +43,7 @@ const Todo: React.SFC<Props> = (props) => {
   const key = "AddItemModal";
 
   const onModalOk = () => {
-    if(R.isEmpty(newTitle)) {
+    if(isEmpty(newTitle)) {
       notification.error({
         key,
         message: 'Title is required',
@@ -88,7 +88,7 @@ const Todo: React.SFC<Props> = (props) => {
         </h2>
         <h3>Description: 
           <TextArea
-            disabled={R.isEmpty(newTitle)}
+            disabled={isEmpty(newTitle)}
             onChange={e => setDescription(e.target.value)}
             placeholder="Enter any description"
             value={newDescription}

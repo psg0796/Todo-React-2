@@ -1,6 +1,6 @@
 import React from 'react';
 import {Flex, FlexCol, FlexRow} from '../common/components/flex';
-import * as R from 'ramda';
+import { repeat } from 'ramda';
 import Button from '../common/components/button';
 
 export default {
@@ -8,7 +8,7 @@ export default {
   title: 'Flex',
 };
 
-const FlexData = R.repeat(<Button title="Item"/>, 10);
+const FlexData = repeat(<Button title="Item"/>, 10);
 
 export const Column = () => <div style={{height: '100vh'}}>
     <FlexCol>
