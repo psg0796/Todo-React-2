@@ -18,7 +18,6 @@ import styled from "styled-components";
 import { white, shark } from "./common/colors";
 import { FlexCol, Flex } from "./common/components/flex";
 import { font24, font32 } from "./common/fontSize";
-import { margin24 } from "./common/margin";
 
 export interface UserTasksProps {
   key: Date;

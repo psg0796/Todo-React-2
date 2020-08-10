@@ -4,9 +4,10 @@ import { UserTasksProps } from '../App';
 import Button from '../common/components/button';
 import Modal from 'antd/lib/modal/Modal';
 import moment from 'moment';
-import { Input } from 'antd';
+import { Input, notification } from 'antd';
 import styled from 'styled-components';
 import { margin24 } from '../common/margin';
+import * as R from 'ramda';
 
 const { TextArea } = Input;
 moment().format();
@@ -39,15 +40,29 @@ const Todo: React.SFC<Props> = (props) => {
     setAddModalVisible(false);
   }
 
+  const key = "AddItemModal";
+
   const onModalOk = () => {
-    setAddModalVisible(false);
-    props.addItem({
-      key: new Date(),
-      title: newTitle,
-      description: newDescription,
-      isDone: false
-    });
-    setTimeout(() => reset(), 200);
+    if(R.isEmpty(newTitle)) {
+      notification.error({
+        key,
+        message: 'Title is required',
+        description: 'Unable to create the task due to lack of information'
+      })
+    } else {
+      setAddModalVisible(false);
+      props.addItem({
+        key: new Date(),
+        title: newTitle,
+        description: newDescription,
+        isDone: false
+      });
+      notification.success({
+        key,
+        message: 'Task created successfully',
+      })
+      setTimeout(() => reset(), 200);  
+    }
   }
 
   return (
@@ -60,7 +75,7 @@ const Todo: React.SFC<Props> = (props) => {
         onCancel={onModalCancel}
       >
         <h2>Title : <Input onChange={e => setTitle(e.target.value)} placeholder="Enter the title to be displayed" value={newTitle}/></h2>
-        <h3>Description: <TextArea onChange={e => setDescription(e.target.value)} placeholder="Enter any description" value={newDescription}/></h3>
+        <h3>Description: <TextArea disabled={R.isEmpty(newTitle)} onChange={e => setDescription(e.target.value)} placeholder="Enter any description" value={newDescription}/></h3>
         <Button title="reset" isDanger={true} type="primary" onClick={reset} />
       </Modal>
       <TaskTable data={props.data} addItem={props.addItem} deleteItem={props.deleteItem} />
