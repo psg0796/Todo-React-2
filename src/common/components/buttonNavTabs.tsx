@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './button';
 import { Link } from 'react-router-dom';
-import { FlexRow } from './flex';
+import Flex, { FlexDirection } from './flex';
 import { equals } from 'ramda';
 
 export interface ButtonNavTabProps {
@@ -17,7 +17,7 @@ export interface Props {
 }
 
 const ButtonNavTabs: React.SFC<Props> = (props) => (
-  <FlexRow className={props.className}>
+  <Flex className={props.className} direction={FlexDirection.row}>
     {
       props.tabPaths.map(path => 
         <Link to={path.linkTo}>
@@ -30,7 +30,7 @@ const ButtonNavTabs: React.SFC<Props> = (props) => (
         </Link>
       )
     }
-  </FlexRow>
+  </Flex>
 )
 
 export default ButtonNavTabs;

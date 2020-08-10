@@ -16,7 +16,7 @@ import { Data } from "./mockData";
 import { filter, append } from "ramda";
 import styled from "styled-components";
 import { white, shark } from "./common/colors";
-import { FlexCol, Flex } from "./common/components/flex";
+import Flex, { FlexDirection } from "./common/components/flex";
 import { font24, font32 } from "./common/fontSize";
 
 export interface UserTasksProps {
@@ -74,7 +74,7 @@ const AppContainer = styled(Flex)`
   color: ${white};
 `;
 
-const AppContent = styled(FlexCol)`
+const AppContent = styled(Flex)`
   width: fit-content;
 `;
 
@@ -132,7 +132,7 @@ class App extends Component<Props, State> {
       <Router>
         <div className="App">
           <AppContainer>
-            <AppContent>
+            <AppContent direction={FlexDirection.column}>
               <StyledButtonNavTabs
                 onClick={this.handleNavTabClick}
                 activeTab={this.state.activeTab}

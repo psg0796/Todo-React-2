@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, FlexCol, FlexRow} from '../common/components/flex';
+import Flex, {FlexDirection} from '../common/components/flex';
 import { repeat } from 'ramda';
 import Button from '../common/components/button';
 
@@ -11,9 +11,9 @@ export default {
 const FlexData = repeat(<Button title="Item"/>, 10);
 
 export const Column = () => <div style={{height: '100vh'}}>
-    <FlexCol>
+    <Flex direction={FlexDirection.column}>
       {FlexData}
-    </FlexCol>
+    </Flex>
   </div>;
 
-export const Row = () => <FlexRow>{FlexData}</FlexRow>;
+export const Row = () => <Flex direction={FlexDirection.row}>{FlexData}</Flex>;

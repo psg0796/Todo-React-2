@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import { clone, not, isEmpty } from 'ramda';
 import Button from './button';
-import { FlexRow } from './flex';
+import Flex, { FlexDirection } from './flex';
 import moment from 'moment';
 import styled from 'styled-components';
 import { margin8, margin24 } from '../margin';
@@ -15,7 +15,7 @@ interface Props {
   deleteItem: (task: UserTasksProps) => void
 }
 
-const StyledFlexRow = styled(FlexRow)`
+const StyledFlex = styled(Flex)`
   > button {
     margin: ${margin8};
   }
@@ -50,11 +50,11 @@ const TaskTable: React.SFC<Props> = (props) => {
       title: 'Actions',
       dataIndex: 'isDone',
       render: (isDone: boolean, record: UserTasksProps) => (
-        <StyledFlexRow>
+        <StyledFlex direction={FlexDirection.row}>
           {isDone? <Button type="primary" title="Todo" onClick={() => handleItemToggle(record, props.deleteItem, props.addItem)} /> :
            <Button type="primary" title="Done" onClick={() => handleItemToggle(record, props.deleteItem, props.addItem)} />}
           <Button type="default" isDanger={true} title="Delete" onClick={() => props.deleteItem(record)}/>
-        </StyledFlexRow>
+        </StyledFlex>
       )
     },
   ];
