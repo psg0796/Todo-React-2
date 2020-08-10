@@ -11,8 +11,8 @@ import ButtonNavTabs, {
 } from "./common/components/buttonNavTabs";
 import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
-import { Paths } from "./common/Constants";
-import { Data } from "./mockData";
+import { paths } from "./common/Constants";
+import { data } from "./mockData";
 import { filter, append } from "ramda";
 import styled from "styled-components";
 import { white, shark } from "./common/colors";
@@ -38,10 +38,10 @@ interface RoutesInterface {
   ) => JSX.Element;
 }
 
-const Routes: RoutesInterface[] = [
+const routes: RoutesInterface[] = [
   {
-    title: Paths.todo.title,
-    path: Paths.todo.path,
+    title: paths.todo.title,
+    path: paths.todo.path,
     exact: true,
     componentRenderer: (data, addItem, deleteItem, extras) => (
       <Todo
@@ -53,8 +53,8 @@ const Routes: RoutesInterface[] = [
     ),
   },
   {
-    title: Paths.done.title,
-    path: Paths.done.path,
+    title: paths.done.title,
+    path: paths.done.path,
     exact: true,
     componentRenderer: (data, addItem, deleteItem, extras) => (
       <Done
@@ -93,8 +93,8 @@ interface Props {}
 
 class App extends Component<Props, State> {
   state = {
-    activeTab: window.localStorage.getItem("activeTab") || Paths.todo.title,
-    data: Data,
+    activeTab: window.localStorage.getItem("activeTab") || paths.todo.title,
+    data: data,
   };
 
   getExtras = (title: string) => {
@@ -123,7 +123,7 @@ class App extends Component<Props, State> {
   };
 
   render() {
-    const tabPaths: ButtonNavTabProps[] = Routes.map((route) => ({
+    const tabPaths: ButtonNavTabProps[] = routes.map((route) => ({
       title: route.title,
       linkTo: route.path,
     }));
@@ -140,13 +140,13 @@ class App extends Component<Props, State> {
               />
               <Switch>
                 <Route exact path="/">
-                  {this.state.activeTab === Paths.todo.title ? (
-                    <Redirect to={Paths.todo.path} />
+                  {this.state.activeTab === paths.todo.title ? (
+                    <Redirect to={paths.todo.path} />
                   ) : (
-                    <Redirect to={Paths.done.path} />
+                    <Redirect to={paths.done.path} />
                   )}
                 </Route>
-                {Routes.map((route) => (
+                {routes.map((route) => (
                   <Route exact={route.exact} path={route.path}>
                     {route.componentRenderer(
                       this.state.data,

@@ -1,6 +1,6 @@
 import { UserTasksProps } from "./App";
 
-export const Data: UserTasksProps[] = [
+export const data: UserTasksProps[] = [
   {
     key: new Date(),
     title: "okoko",
