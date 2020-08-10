@@ -13,7 +13,7 @@ import Todo from "./MainApp/todo";
 import Done from "./MainApp/done";
 import { paths } from "./common/Constants";
 import { data } from "./mockData";
-import { filter, append } from "ramda";
+import { filter, append, map } from "ramda";
 import styled from "styled-components";
 import { white, shark } from "./common/colors";
 import Flex, { FlexDirection } from "./common/components/flex";
@@ -123,10 +123,10 @@ class App extends Component<Props, State> {
   };
 
   render() {
-    const tabPaths: ButtonNavTabProps[] = routes.map((route) => ({
+    const tabPaths: ButtonNavTabProps[] = map(route => ({
       title: route.title,
       linkTo: route.path,
-    }));
+      }), routes);
 
     return (
       <Router>
@@ -146,7 +146,7 @@ class App extends Component<Props, State> {
                     <Redirect to={paths.done.path} />
                   )}
                 </Route>
-                {routes.map((route) => (
+                {map(route => (
                   <Route exact={route.exact} path={route.path}>
                     {route.componentRenderer(
                       this.state.data,
@@ -155,7 +155,7 @@ class App extends Component<Props, State> {
                       this.getExtras(route.title)
                     )}
                   </Route>
-                ))}
+                ), routes)}
               </Switch>
             </AppContent>
           </AppContainer>

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './button';
 import { Link } from 'react-router-dom';
 import Flex, { FlexDirection } from './flex';
-import { equals } from 'ramda';
+import { equals, map } from 'ramda';
 
 export interface ButtonNavTabProps {
   title: string,
@@ -19,7 +19,7 @@ export interface Props {
 const ButtonNavTabs: React.SFC<Props> = (props) => (
   <Flex className={props.className} direction={FlexDirection.row}>
     {
-      props.tabPaths.map(path => 
+      map(path => 
         <Link to={path.linkTo}>
           <Button
             size="large"
@@ -27,7 +27,8 @@ const ButtonNavTabs: React.SFC<Props> = (props) => (
             title={path.title}
             onClick={() => props.onClick(path.title)}
           />
-        </Link>
+        </Link>,
+        props.tabPaths
       )
     }
   </Flex>
